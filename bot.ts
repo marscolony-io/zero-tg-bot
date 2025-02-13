@@ -96,10 +96,13 @@ async function checkAndPost() {
       writeSupplyToFile(newSupply);
 
       const landsLeft = 21000 - newSupply;
+
+      const formattedLandsLeft = landsLeft.toLocaleString();
       const message =
-        `Lands claimed: ${newSupply}\n` +
-        `Lands left: ${landsLeft}\n\n` +
-        `Claim your lands here: https://zerocolony.fun`;
+        "🚀 Zero Colony Land Update 🌍\n\n" +
+        `- Land plots claimed: ${newSupply}\n` +
+        `- Land plots availalbe: ${formattedLandsLeft}\n\n` +
+        `🔗 Claim your land plot now: https://zerocolony.fun`;
 
       await bot.api.sendMessage(CHAT_ID!, message);
       console.log("[LOG] Message sent successfully.");
