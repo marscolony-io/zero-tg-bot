@@ -87,7 +87,7 @@ async function checkAndPost() {
     );
 
     // If new lands have been claimed, post an update
-    if (newSupply !== previousSupply) {
+    if (newSupply.toString() !== previousSupply.toString()) {
       console.log(
         "[LOG] New lands claimed. Posting message to Telegram chat..."
       );
