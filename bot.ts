@@ -121,9 +121,22 @@ async function checkAndPost() {
 bot.start();
 console.log("[LOG] Bot has started.");
 
-// --- Immediately do a check on startup ---
-checkAndPost();
+// --- Schedule checks every 20 minutes ---
+const TWENTY_MINUTES = 20 * 60 * 1000; // 20 minutes in milliseconds
 
-// --- Schedule subsequent checks every hour (3600000 ms) ---
-setInterval(checkAndPost, 3600000);
-console.log("[LOG] Bot will check totalSupply every hour.");
+// Calculate delay until next 20-minute mark
+const now = new Date();
+const minutes = now.getMinutes();
+const nextCheckMinute = Math.ceil(minutes / 20) * 20;
+const delay = ((nextCheckMinute - minutes) * 60 - now.getSeconds()) * 1000;
+
+// Initial check after calculated delay
+setTimeout(() => {
+  checkAndPost();
+  // Then schedule subsequent checks every 20 minutes
+  setInterval(checkAndPost, TWENTY_MINUTES);
+}, delay);
+
+console.log(
+  "[LOG] Bot will check totalSupply every 20 minutes (at :00, :20, :40)."
+);
